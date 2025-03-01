@@ -32,12 +32,17 @@ public class SpellSigilDrawer extends JComponent {
 
     String[] runes = Rune.getKeys();
     String[] letters = new String[26];
-    String[] other = new String[19];
+    String[] other = new String[22];
+    String[] numbers = new String[12];
 
-    for(int i = 0, j = 0, k = 0; i < runes.length; i++){
+    for(int i = 0, j = 0, k = 0, l = 0; i < runes.length; i++){
       if(runes[i].length() == 1 && Character.isLetter(runes[i].charAt(0))){
         letters[j] = runes[i];
         j++;
+      }
+      else if(runes[i].length() == 1 && !(Character.isLetter(runes[i].charAt(0)))){
+        numbers[l] = runes[i];
+        l++;
       }
       else{
         other[k] = runes[i];
@@ -46,7 +51,7 @@ public class SpellSigilDrawer extends JComponent {
     }
 
 
-    double unitLength = ((512 * 3.1415) / (2 * runes.length + 1 + (2 * 3.1415)));
+    double unitLength = ((512 * 3.1415) / (2 * 35 + 1 + (2 * 3.1415)));
     double margin = 2 * unitLength;
     double radius = 512 - (2 * unitLength);
 
@@ -62,8 +67,13 @@ public class SpellSigilDrawer extends JComponent {
     AffineTransform at = g2d.getTransform();
 
     drawCircle(g2d, margin, margin, radius, unitLength, letters);
-
+    g2d.setTransform(at);
     drawCircle(g2d, (margin + (6 * unitLength)), (margin + (6 * unitLength)), (radius - (6 * unitLength)), unitLength, other);
+    g2d.setTransform(at);
+    drawCircle(g2d, (margin + (12 * unitLength)), (margin + (12 * unitLength)), (radius - (12 * unitLength)), unitLength, numbers);
+    g2d.setTransform(at);
+
+    (Rune.getRune("SOMATIC")).draw(g2d, (width / 2) - (unitLength * 4), (width / 2), (unitLength * 4));
 
   }
 
