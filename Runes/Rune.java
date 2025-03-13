@@ -70,6 +70,11 @@ public abstract class Rune {
     runeMap.put("9", new NineRune());
     runeMap.put("#", new TenRune());
     runeMap.put("!", new ElevenRune());
+    runeMap.put("(", new ParenthesisRune());
+    runeMap.put(")", new ParenthesisRune());
+    runeMap.put(";", new SemiColonRune());
+    runeMap.put(" ", new _Rune());
+    runeMap.put("BLANK", new BlankRune());
     //fill out with rest of runes
   }
 

@@ -56,11 +56,11 @@ public class SpellReader {
       tokenizer = new StringTokenizer(nextLine, delim, true);
       symbols[i] = new String[40];
 
-      System.out.println("nextLine: " + nextLine);
+      //System.out.println("nextLine: " + nextLine);
 
       do {
         token = tokenizer.nextToken();
-        System.out.println("token: " + token);
+        //System.out.println("token: " + token);
 
         if(keyWords.contains((token.toUpperCase()))) {//checking for key words
           symbols[i][j] = (token.toUpperCase());
@@ -88,7 +88,30 @@ public class SpellReader {
       i++;
       j = 0;
     }
-    return symbols;
+    return resizeStringArrays(symbols);
+  }
+
+  public String[][] resizeStringArrays(String[][] arr) {
+    int m = 0, n = 0;
+    for(int i = 0; i < arr.length; i++){
+      if(arr[i] != null){
+        n = 0;
+        for(int j = 0; j < arr[i].length; j++){
+          if(arr[i][j] != null){
+            n++;
+          }
+        }
+        if(arr[i].length != n){
+          arr[i] = Arrays.copyOf(arr[i], n);
+        }
+        m++;
+      }
+   }
+   if(arr.length != m){
+    arr = Arrays.copyOf(arr, m);
+   }
+
+    return arr;
   }
 
   public void close(){

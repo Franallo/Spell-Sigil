@@ -14,10 +14,12 @@ public class SpellSigilDrawer extends JComponent {
   private int height;
   private Color background = Color.BLACK;
   private Color lineColor = Color.CYAN;
+  private String[][] runes = null;
 
-  public SpellSigilDrawer(int w, int h) {
+  public SpellSigilDrawer(int w, int h, String[][] runes) {
     width = w;
     height= h;
+    this.runes = runes;
   }
 
   @Override
@@ -29,11 +31,36 @@ public class SpellSigilDrawer extends JComponent {
       RenderingHints.VALUE_ANTIALIAS_ON);
     g2d.setRenderingHints(rh);
 
+    Rectangle2D.Double r = new Rectangle2D.Double(0,0,width, height);
+
+    g2d.setBackground(background);
+    g2d.setColor(background);
+    g2d.fill(r);
+    g2d.setColor(lineColor);
+    g2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+
+    if(runes == null){
+      drawTemplate(g2d);
+      return;
+    }
+
+    //count all runes
+    //do math for spacing of all layers
+    //name runes[0]
+    //Verbal ...
+    //Material ...
+    //Somatic ?idk
+    //Spell description //may require multiple layers
+    //not all may be present, spell name should always be
+    
+  }
+
+  public void drawTemplate(Graphics2D g2d) {
 
     String[] runes = Rune.getKeys();
     String[] letters = new String[26];
-    String[] other = new String[22];
-    String[] numbers = new String[12];
+    String[] other = new String[23];
+    String[] numbers = new String[16];
 
     for(int i = 0, j = 0, k = 0, l = 0; i < runes.length; i++){
       if(runes[i].length() == 1 && Character.isLetter(runes[i].charAt(0))){
@@ -55,15 +82,6 @@ public class SpellSigilDrawer extends JComponent {
     double margin = 2 * unitLength;
     double radius = 512 - (2 * unitLength);
 
-    Rectangle2D.Double r = new Rectangle2D.Double(0,0,width, height);
-
-    g2d.setBackground(background);
-    g2d.setColor(background);
-    g2d.fill(r);
-    g2d.setColor(lineColor);
-    g2d.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-
-
     AffineTransform at = g2d.getTransform();
 
     drawCircle(g2d, margin, margin, radius, unitLength, letters);
@@ -73,7 +91,7 @@ public class SpellSigilDrawer extends JComponent {
     drawCircle(g2d, (margin + (12 * unitLength)), (margin + (12 * unitLength)), (radius - (12 * unitLength)), unitLength, numbers);
     g2d.setTransform(at);
 
-    (Rune.getRune("SOMATIC")).draw(g2d, (width / 2) - (unitLength * 4), (width / 2), (unitLength * 4));
+    //(Rune.getRune("SOMATIC")).draw(g2d, (width / 2) - (unitLength * 4), (width / 2), (unitLength * 4));
 
   }
 
@@ -92,6 +110,7 @@ public class SpellSigilDrawer extends JComponent {
     }
   }
 
+  /*
   public static void main(String[] args) {
     JFrame frame = new JFrame();
     int size = 1024;
@@ -102,4 +121,5 @@ public class SpellSigilDrawer extends JComponent {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setVisible(true);
   }
+  */
 };
